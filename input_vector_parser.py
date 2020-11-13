@@ -8,7 +8,7 @@ class InputVectorParser:
         self.input_vectors_list = []
 
     def read(self):
-        full_path = self.path + '/' + self.name
+        full_path = self.path + '\\' + self.name
         file = open(full_path)
 
         obj_list = file.readline().rstrip('\n').split(" ")
