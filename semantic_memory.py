@@ -11,9 +11,8 @@ class SemanticMemory:
         for name in object_names:
             self.obj_traits[name] = []
         self.last_data_input = []
-        self.user_requests = []
-        self.response_thresholds = ResponseThresholds()
         self.holons = []
+        self.response_thresholds = ResponseThresholds(0, 0.66, 0.66, 1, 1, 1)
 
     def update_from_list(self, input_vector_list):
         self.last_data_input = input_vector_list
@@ -31,24 +30,32 @@ class SemanticMemory:
 
     def save_to_file(self, path, name):
         dict_to_save = {}
-        dict_to_save["obj_traits"] = dict(self.obj_traits)
-        dict_to_save["object_names"] = self.object_names
-        dict_to_save["trait_names"] = self.trait_names
-        dict_to_save["user_requests"] = self.user_requests
-        with open(path + "\\" + name, "w") as fp:
+        dict_to_save['obj_traits'] = dict(self.obj_traits)
+        dict_to_save['object_names'] = self.object_names
+        dict_to_save['trait_names'] = self.trait_names
+        dict_holons = []
+        for holon in self.holons:
+            dict_holons.append(holon.toJSON())
+        dict_to_save['holons'] = dict_holons
+        dict_to_save['response_thresholds'] = self.response_thresholds.__dict__
+        with open(path + '\\' + name, 'w') as fp:
             json.dump(dict_to_save, fp)
 
     def load_from_file(self, path, name):
         data = None
-        with open(path + "\\" + name, "r") as fp:
+        with open(path + '\\' + name, 'r') as fp:
             data = json.load(fp)
-        self.object_names = data["object_names"]
-        self.trait_names = data["trait_names"]
-        self.obj_traits = data["obj_traits"]
-        self.user_requests = data["user_requests"]
+        self.object_names = data['object_names']
+        self.trait_names = data['trait_names']
+        self.obj_traits = data['obj_traits']
+        holons = []
+        for dict_holon in data['holons']:
+            holon = Holon(**dict_holon)
+            holon.semantic_memory = self
+            holons.append(holon)
 
-    def save_user_request(self, obj_name, trait_1, trait_2):
-        self.user_requests.append([obj_name, trait_1, trait_2])
+        self.holons = holons
+        self.response_thresholds = ResponseThresholds(**data['response_thresholds'])
 
     def handle_user_request(self, obj_name, trait_1, trait_2):
         def search_for_direct_observation():
@@ -96,10 +103,11 @@ class SemanticMemory:
                         f'{self.response_thresholds.get_response(probability, all_data_taken)}(¬{trait_names[trait_1_idx]} <==> ¬{trait_names[trait_2_idx]})')
 
             if holon is None:
-                holon = Holon(obj_name, trait_1, trait_2, self)
+                holon = Holon(obj_name, trait_1, trait_2, semantic_memory=self)
                 holon.update()
                 holons.append(holon)
                 print_for_holon(holon)
+                print(self.holons)
 
             else:
                 holon.update()

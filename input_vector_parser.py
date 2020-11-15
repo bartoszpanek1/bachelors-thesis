@@ -11,14 +11,14 @@ class InputVectorParser:
         full_path = self.path + '\\' + self.name
         file = open(full_path)
 
-        obj_list = file.readline().rstrip('\n').split(" ")
-        traits_list = file.readline().rstrip('\n').split(" ")
+        obj_list = file.readline().rstrip('\n').split(' ')
+        traits_list = file.readline().rstrip('\n').split(' ')
 
-        print("Object list ", obj_list)
-        print("Traits names", traits_list)
+        print('Object list ', obj_list)
+        print('Traits names', traits_list)
 
         for i, line in enumerate(file):
-            vector = line.split(" ")
+            vector = line.split(' ')
             obj = vector.pop(0)
 
             assert (obj in obj_list)

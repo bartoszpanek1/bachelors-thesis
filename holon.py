@@ -1,18 +1,23 @@
 import random as rnd
 import math as math
+import json
+
 
 class Holon:
-    def __init__(self, obj_name, trait_1, trait_2, semantic_memory):
+    def __init__(self, obj_name, trait_1_name, trait_2_name, analyzed_vectors=None, analyzed_all_data=False,
+                 tt=0.0, tf=0.0, ft=0.0, ff=0.0, semantic_memory=None):
+        if analyzed_vectors is None:
+            analyzed_vectors = []
         self.obj_name = obj_name
-        self.trait_1_name = trait_1
-        self.trait_2_name = trait_2
-        self.tt = 0.0
-        self.tf = 0.0
-        self.ft = 0.0
-        self.ff = 0.0
-        self.analyzed_vectors = []
-        self.analyzed_all_data = False
+        self.trait_1_name = trait_1_name
+        self.trait_2_name = trait_2_name
         self.semantic_memory = semantic_memory
+        self.analyzed_vectors = analyzed_vectors
+        self.analyzed_all_data = analyzed_all_data
+        self.tt = tt
+        self.tf = tf
+        self.ft = ft
+        self.ff = ff
 
     def take_part_of_data(self, percentage_of_data):
         obj_memories = self.semantic_memory.obj_traits[self.obj_name]
@@ -59,4 +64,6 @@ class Holon:
         self.ft = false_true / sum
         self.ff = false_false / sum
 
-
+    def toJSON(self):
+        self.semantic_memory = None
+        return self.__dict__
