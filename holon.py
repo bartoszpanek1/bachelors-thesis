@@ -32,6 +32,8 @@ class Holon:
 
         if len(obj_memories) == 0:
             self.analyzed_all_data = True
+        else:
+            self.analyzed_all_data = False
 
     def update(self):
         self.take_part_of_data(0.25)

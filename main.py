@@ -31,9 +31,12 @@ def run_agent():
             else:
                 print('Wrong input')
         elif action == 'end':
-            semantic_memory.save_to_file('D:\PyCharm\PyCharm Projects\\bachelors-thesis', 'memory_file')
+            file_name = input('Enter new memory filename: ')
+            if file_name == '':
+                file_name = 'memory_file'
+            semantic_memory.save_to_file('D:\PyCharm\PyCharm Projects\\bachelors-thesis', file_name)
             agent_run = False
-            print('Memory has been saved and the execution has finished')
+            print(f'Memory has been saved succesfully to a file named \'{file_name}\'')
         else:
             print('ERROR! No such command')
 
@@ -63,13 +66,13 @@ while run:
             open(path + '\\' + file_name)
             semantic_memory.load_from_file(path, file_name)
             print('Succesfully loaded agent\'s memory')
-            print(semantic_memory.holons)
+
+            old_agent_run = True
+            # Loop for operations on existing agent
+            run_agent()
         except IOError:
             print('No such file or directory')
 
-        old_agent_run = True
-        # Loop for operations on existing agent
-        run_agent()
     elif action == 'end':
         run = False
         print('Execution has finished')
