@@ -31,6 +31,7 @@ while run:
                 trait_1 in semantic_memory.trait_names and \
                 trait_2 in semantic_memory.trait_names:
             semantic_memory.save_user_request(obj_name, trait_1, trait_2)
+
         else:
             print("Wrong input")
 

@@ -8,6 +8,7 @@ class Holon:
         self.ft = 0.0
         self.ff = 0.0
         self.semantic_memory = semantic_memory
+        self.last_vector = semantic_memory.obj_traits[self.obj_name][-1]
 
     def update(self):
         obj_memories = self.semantic_memory.obj_traits[self.obj_name]
