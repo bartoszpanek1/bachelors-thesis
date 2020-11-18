@@ -1,4 +1,4 @@
-from semantic_memory import SemanticMemory
+from knowledge_database import SemanticMemory
 from input_vector_parser import InputVectorParser
 
 def run_agent():
