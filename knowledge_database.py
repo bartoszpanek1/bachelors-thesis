@@ -3,7 +3,7 @@ from response_thresholds import ResponseThresholds
 from holon import Holon
 
 
-class SemanticMemory:
+class KnowledgeDatabase:
     def __init__(self, object_names, trait_names):
         self.object_names = object_names
         self.trait_names = trait_names
@@ -21,7 +21,7 @@ class SemanticMemory:
             self.update(input_vector)
 
     def update(self, input_vector):
-        self.obj_traits[input_vector.obj_name].append(input_vector.list)
+        self.obj_traits[input_vector.obj_name].append(input_vector.traits_list)
 
     def expand(self, new_object_name):
         if new_object_name not in self.object_names:
@@ -96,9 +96,8 @@ class SemanticMemory:
         trait_2_idx = self.trait_names.index(trait_2)
 
         if holon is None:
-            holon = Holon(obj_name, trait_1, trait_2, semantic_memory=self)
+            holon = Holon(obj_name, trait_1, trait_2, knowledge_database=self)
             self.holons.append(holon)
-            print(self.holons)
 
         if holon.tf != 0 or holon.ft != 0:
             print(f'Know(¬({self.trait_names[trait_1_idx]} <==> {self.trait_names[trait_2_idx]})({obj_name})')
@@ -106,12 +105,12 @@ class SemanticMemory:
             direct_observation = search_for_direct_observation()
 
             if direct_observation is not None:
-                trait_1_value = direct_observation.list[trait_1_idx]
-                trait_2_value = direct_observation.list[trait_2_idx]
+                trait_1_value = direct_observation.traits_list[trait_1_idx]
+                trait_2_value = direct_observation.traits_list[trait_2_idx]
                 if (trait_1_value == 1 and trait_2_value == 0) or \
                         (trait_1_value == 0 and trait_2_value == 1):
                     print(
-                        f'Know(¬({self.trait_names[trait_1_idx]} <==> {self.trait_names[trait_2_idx]})({obj_name})')
+                        f'Know(¬({self.trait_names[trait_1_idx]} <==> {self.trait_names[trait_2_idx]})({obj_name}))')
                 else:
                     print_response(holon, self.trait_names, self.holons)
             else:

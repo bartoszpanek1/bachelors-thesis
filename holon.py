@@ -5,13 +5,13 @@ import json
 
 class Holon:
     def __init__(self, obj_name, trait_1_name, trait_2_name, analyzed_vectors=None, analyzed_all_data=False,
-                 tt=0.0, tf=0.0, ft=0.0, ff=0.0, semantic_memory=None):
+                 tt=0.0, tf=0.0, ft=0.0, ff=0.0, knowledge_database=None):
         if analyzed_vectors is None:
             analyzed_vectors = []
         self.obj_name = obj_name
         self.trait_1_name = trait_1_name
         self.trait_2_name = trait_2_name
-        self.semantic_memory = semantic_memory
+        self.knowledge_database = knowledge_database
         self.analyzed_vectors = analyzed_vectors
         self.analyzed_all_data = analyzed_all_data
         self.tt = tt
@@ -20,7 +20,7 @@ class Holon:
         self.ff = ff
 
     def take_part_of_data(self, percentage_of_data):
-        obj_memories = self.semantic_memory.obj_traits[self.obj_name]
+        obj_memories = self.knowledge_database.obj_traits[self.obj_name]
         data_vectors_to_take = math.ceil(len(obj_memories) * percentage_of_data)
 
         vectors_taken = 0
@@ -37,7 +37,7 @@ class Holon:
 
     def update(self):
         self.take_part_of_data(0.25)
-        trait_names = self.semantic_memory.trait_names
+        trait_names = self.knowledge_database.trait_names
         trait_1_idx = trait_names.index(self.trait_1_name)
         trait_2_idx = trait_names.index(self.trait_2_name)
 
@@ -67,5 +67,5 @@ class Holon:
         self.ff = false_false / sum
 
     def toJSON(self):
-        self.semantic_memory = None
+        self.knowledge_database = None
         return self.__dict__

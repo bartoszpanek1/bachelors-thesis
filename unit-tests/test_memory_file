@@ -1,0 +1,1 @@
+{"obj_traits": {"o1": [[1, 2, 1, 1], [0, 0, 1, 0]], "o2": [[0, 0, 1, 0]], "o3": [], "o4": []}, "object_names": ["o1", "o2", "o3", "o4"], "trait_names": ["O", "P", "Q", "R"], "holons": [], "response_thresholds": {"min_pos": 0, "max_pos": 0.66, "min_bel": 0.66, "max_bel": 1, "min_know": 1, "max_know": 1}}

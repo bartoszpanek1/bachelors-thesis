@@ -4,7 +4,6 @@ class InputVectorParser:
     def __init__(self, path, name):
         self.path = path
         self.name = name
-        self.is_running = False
         self.input_vectors_list = []
 
     def read(self):
@@ -25,7 +24,7 @@ class InputVectorParser:
             assert (len(traits_list) == len(vector))
 
             traits = list(map(int, vector))
-            input_vec = InputVector(obj, len(traits_list), traits, i)
+            input_vec = InputVector(obj, len(traits_list), traits)
             self.input_vectors_list.append(input_vec)
 
     def return_vec_list(self):

@@ -1,4 +1,4 @@
-from knowledge_database import SemanticMemory
+from knowledge_database import KnowledgeDatabase
 from input_vector_parser import InputVectorParser
 
 def run_agent():
@@ -41,7 +41,7 @@ def run_agent():
             print('ERROR! No such command')
 
 trait_names = ['N', 'L', 'P']
-semantic_memory = SemanticMemory([], trait_names)
+semantic_memory = KnowledgeDatabase([], trait_names)
 # D:\PyCharm\PyCharm Projects\bachelors-thesis
 
 run = True

@@ -8,7 +8,7 @@ class ResponseThresholds:
         self.max_know = max_know
 
     def get_response(self, probability, all_data_taken):
-        if probability == self.max_know:
+        if self.min_know <= probability <= self.max_know:
             if all_data_taken:
                 return 'Know'
             else:
