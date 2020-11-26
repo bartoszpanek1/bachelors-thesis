@@ -51,7 +51,7 @@ class KnowledgeDatabase:
         holons = []
         for dict_holon in data['holons']:
             holon = Holon(**dict_holon)
-            holon.semantic_memory = self
+            holon.knowledge_database = self
             holons.append(holon)
 
         self.holons = holons
@@ -85,7 +85,7 @@ class KnowledgeDatabase:
                         f'{self.response_thresholds.get_response(probability, all_data_taken)}({trait_names[trait_1_idx]} <==> {trait_names[trait_2_idx]})({holon.obj_name})')
                 elif state == 'tfft':
                     print(
-                        f'Know(¬({self.trait_names[trait_1_idx]} <==> {self.trait_names[trait_2_idx]})({holon.obj_name})')
+                        f'Know(¬({self.trait_names[trait_1_idx]} <==> {self.trait_names[trait_2_idx]})({holon.obj_name}))')
 
             holon.update()
             print_for_holon(holon)
@@ -100,7 +100,7 @@ class KnowledgeDatabase:
             self.holons.append(holon)
 
         if holon.tf != 0 or holon.ft != 0:
-            print(f'Know(¬({self.trait_names[trait_1_idx]} <==> {self.trait_names[trait_2_idx]})({obj_name})')
+            print(f'Know(¬({self.trait_names[trait_1_idx]} <==> {self.trait_names[trait_2_idx]})({obj_name}))')
         else:
             direct_observation = search_for_direct_observation()
 

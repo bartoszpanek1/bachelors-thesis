@@ -20,6 +20,8 @@ class InputVectorParser:
             vector = line.split(' ')
             obj = vector.pop(0)
 
+            print(obj)
+
             assert (obj in obj_list)
             assert (len(traits_list) == len(vector))
 
